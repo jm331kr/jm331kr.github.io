@@ -24,6 +24,12 @@ main:
 
   - title: "Life"
     url: /life/
+
+  - title: "Study"
+    url: /study/
+
+  - title: "Culture"
+    url: /culture/
     
   - title: "Talk"
     url: /talk/
