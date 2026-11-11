@@ -3,14 +3,13 @@ media:
   output: /images
 
 content:
-  - name: posts
-    label: Posts
+  - name: travel
+    label: Travel
     type: collection
-    path: _posts
+    path: _travel
     filename: "{year}-{month}-{day}-{primary}.md"
     format: yaml-frontmatter
-
-    fields:
+    fields: &post_fields
       - name: title
         label: Title
         type: string
@@ -23,32 +22,70 @@ content:
           time: true
           format: yyyy-MM-dd HH:mm:ss
 
-      - name: categories
-        label: Categories
-        type: select
-        required: true
-        options:
-          values:
-            - name: travel
-              label: Travel
-            - name: film
-              label: Film
-            - name: books
-              label: Books
-            - name: music
-              label: Music
-            - name: life
-              label: Life
-            - name: study
-              label: Study
-            - name: culture
-              label: Culture
-            - name: ideas
-              label: Ideas
-            - name: talk
-              label: Talk
-          multiple: false
-
       - name: body
         label: Content
         type: rich-text
+
+  - name: film
+    label: Film
+    type: collection
+    path: _film
+    filename: "{year}-{month}-{day}-{primary}.md"
+    format: yaml-frontmatter
+    fields: *post_fields
+
+  - name: books
+    label: Books
+    type: collection
+    path: _books
+    filename: "{year}-{month}-{day}-{primary}.md"
+    format: yaml-frontmatter
+    fields: *post_fields
+
+  - name: music
+    label: Music
+    type: collection
+    path: _music
+    filename: "{year}-{month}-{day}-{primary}.md"
+    format: yaml-frontmatter
+    fields: *post_fields
+
+  - name: life
+    label: Life
+    type: collection
+    path: _life
+    filename: "{year}-{month}-{day}-{primary}.md"
+    format: yaml-frontmatter
+    fields: *post_fields
+
+  - name: study
+    label: Study
+    type: collection
+    path: _study
+    filename: "{year}-{month}-{day}-{primary}.md"
+    format: yaml-frontmatter
+    fields: *post_fields
+
+  - name: culture
+    label: Culture
+    type: collection
+    path: _culture
+    filename: "{year}-{month}-{day}-{primary}.md"
+    format: yaml-frontmatter
+    fields: *post_fields
+
+  - name: idea
+    label: Ideas
+    type: collection
+    path: _idea
+    filename: "{year}-{month}-{day}-{primary}.md"
+    format: yaml-frontmatter
+    fields: *post_fields
+
+  - name: talks
+    label: Talk
+    type: collection
+    path: _talks
+    filename: "{year}-{month}-{day}-{primary}.md"
+    format: yaml-frontmatter
+    fields: *post_fields
