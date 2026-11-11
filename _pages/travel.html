@@ -7,19 +7,82 @@ author_profile: true
 
 {% assign sorted_posts = site.travel | sort: "date" | reverse %}
 
+<div class="travel-list">
+
 {% for post in sorted_posts %}
 
-  <div style="padding: 22px 0; border-bottom: 1px solid #ddd;">
+  <a href="{{ post.url | relative_url }}"
+     class="travel-card">
 
-    <a href="{{ post.url | relative_url }}"
-       style="font-size: 20px; font-weight: 500; text-decoration: none;">
+    <div class="travel-card-content">
+      <span class="travel-date">
+        {{ post.date | date: "%Y년 %m월 %d일" }}
+      </span>
 
-      {{ post.date | date: "%Y년 %m월 %d일" }}
+      <span class="travel-weekday">
+        {% assign weekday = post.date | date: "%w" %}
+        {% case weekday %}
+          {% when "0" %}일요일
+          {% when "1" %}월요일
+          {% when "2" %}화요일
+          {% when "3" %}수요일
+          {% when "4" %}목요일
+          {% when "5" %}금요일
+          {% when "6" %}토요일
+        {% endcase %}
+      </span>
+    </div>
 
-    </a>
-
-  </div>
+    <span class="travel-arrow">›</span>
+  </a>
 
 {% endfor %}
 
+</div>
 
+<style>
+.travel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.travel-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 25px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.travel-card:hover {
+  background: rgba(128,128,128,0.08);
+  border-color: #888;
+}
+
+.travel-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.travel-date {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.travel-weekday {
+  font-size: 13px;
+  opacity: 0.65;
+}
+
+.travel-arrow {
+  font-size: 28px;
+  opacity: 0.55;
+}
+</style>
