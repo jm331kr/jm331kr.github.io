@@ -1,0 +1,18 @@
+---
+layout: archive
+title: "Travel"
+permalink: /travel/
+author_profile: true
+---
+
+{% assign sorted_posts = site.travel | sort: "date" | reverse %}
+
+{% for post in sorted_posts %}
+  <div style="margin-bottom: 20px;">
+    <a href="{{ post.url | relative_url }}"
+       style="font-size: 18px; font-weight: bold;">
+      {{ post.date | date: "%Y년 %m월 %d일" }}
+      | {{ post.title }}
+    </a>
+  </div>
+{% endfor %}
