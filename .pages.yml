@@ -26,16 +26,27 @@ content:
       - name: categories
         label: Categories
         type: select
+        required: true
         options:
           values:
             - name: travel
               label: Travel
-            - name: photography
-              label: Photography
-            - name: daily
-              label: Daily
-            - name: thoughts
-              label: Thoughts
+            - name: film
+              label: Film
+            - name: books
+              label: Books
+            - name: music
+              label: Music
+            - name: life
+              label: Life
+            - name: study
+              label: Study
+            - name: culture
+              label: Culture
+            - name: ideas
+              label: Ideas
+            - name: talk
+              label: Talk
           multiple: false
 
       - name: body
