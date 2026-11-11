@@ -7,11 +7,23 @@ author_profile: true
 
 {% assign notes = site.talks | sort: "date" | reverse %}
 
-<div class="talk-list">
+<div class="talk-toolbar">
+  <div class="talk-sort">
+    <button type="button" id="talk-new" class="active">
+      최신순
+    </button>
+    <button type="button" id="talk-old">
+      오래된순
+    </button>
+  </div>
+</div>
+
+<div class="talk-list" id="talk-list">
 
 {% for post in notes %}
 
-  <article class="talk-note">
+  <article class="talk-note"
+           data-date="{{ post.date | date: '%s' }}">
 
     <div class="talk-date">
       {{ post.date | date: "%Y.%m.%d · %H:%M" }}
@@ -34,6 +46,66 @@ author_profile: true
 </div>
 
 <style>
+
+/* 정렬 버튼 영역 */
+
+.talk-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 15px 0 25px;
+}
+
+.talk-sort {
+  display: inline-flex;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.talk-sort button {
+  width: 90px;
+  min-width: 90px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  padding: 9px 0;
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin: 0;
+}
+
+.talk-sort button.active {
+  background: #444;
+  color: #fff;
+}
+
+.talk-sort button:hover:not(.active) {
+  background: rgba(128,128,128,0.1);
+}
+
+/* 다크모드 */
+
+html[data-theme="dark"] .talk-sort button.active {
+  background: #e0e0e0;
+  color: #181818;
+  font-weight: 600;
+}
+
+html[data-theme="dark"] .talk-sort button:not(.active) {
+  background: transparent;
+  color: #cccccc;
+}
+
+html[data-theme="dark"] .talk-sort {
+  border-color: #666;
+}
+
+/* 기존 Talk 목록 */
+
 .talk-list {
   display: flex;
   flex-direction: column;
@@ -74,6 +146,8 @@ author_profile: true
   opacity: 0.6;
 }
 
+/* 모바일 */
+
 @media (max-width: 600px) {
   .talk-note {
     padding: 18px;
@@ -83,4 +157,53 @@ author_profile: true
     font-size: 14px;
   }
 }
+
 </style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const list = document.getElementById("talk-list");
+  const btnNew = document.getElementById("talk-new");
+  const btnOld = document.getElementById("talk-old");
+
+  if (!list || !btnNew || !btnOld) return;
+
+  function sortTalks(ascending) {
+
+    const notes = Array.from(
+      list.querySelectorAll(".talk-note")
+    );
+
+    notes.sort(function (a, b) {
+      const dateA = Number(a.dataset.date);
+      const dateB = Number(b.dataset.date);
+
+      return ascending
+        ? dateA - dateB
+        : dateB - dateA;
+    });
+
+    notes.forEach(function (note) {
+      list.appendChild(note);
+    });
+
+    btnNew.classList.toggle("active", !ascending);
+    btnOld.classList.toggle("active", ascending);
+
+    btnNew.setAttribute("aria-pressed", String(!ascending));
+    btnOld.setAttribute("aria-pressed", String(ascending));
+  }
+
+  btnNew.addEventListener("click", function () {
+    sortTalks(false);
+  });
+
+  btnOld.addEventListener("click", function () {
+    sortTalks(true);
+  });
+
+  sortTalks(false);
+
+});
+</script>
