@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Welcome to Jaemin's Archive Home"
+title: "Jaemin's Archive Home"
 author_profile: true
 redirect_from: 
   - /about/
