@@ -12,16 +12,22 @@ author_profile: true
   <div id="day-posts">
 
     {% for collection in site.collections %}
+
       {% assign posts = collection.docs | sort: "date" %}
 
       {% for post in posts %}
 
-        <article class="day-entry"
-                 data-collection="{{ collection.label }}"
-                 data-date="{{ post.date | date: '%Y-%m-%d' }}"
-                 hidden>
+        <article
+          class="day-entry"
+          data-collection="{{ collection.label }}"
+          data-date="{{ post.date | date: '%Y-%m-%d' }}"
+          data-time="{{ post.date | date: '%s' }}"
+          hidden
+        >
 
-          <h2>{{ post.title }}</h2>
+          <h2 class="day-entry-title">
+            {{ post.title }}
+          </h2>
 
           <div class="day-entry-content">
             {{ post.content | markdownify }}
@@ -30,6 +36,7 @@ author_profile: true
         </article>
 
       {% endfor %}
+
     {% endfor %}
 
   </div>
@@ -41,10 +48,24 @@ author_profile: true
 </p>
 
 <style>
+
+/* 숨김 처리 강제 적용 */
+
+#day-archive[hidden],
+#day-empty[hidden],
+.day-entry[hidden] {
+  display: none !important;
+}
+
+/* 날짜 제목 */
+
 #day-title {
   font-size: 1.7em;
+  font-weight: 700;
   margin-bottom: 30px;
 }
+
+/* 게시글 */
 
 .day-entry {
   padding: 0 0 30px;
@@ -56,30 +77,68 @@ author_profile: true
   border-bottom: none;
 }
 
-.day-entry h2 {
+/* 게시글 제목 */
+
+.day-entry-title {
   font-size: 1.35em;
+  font-weight: 700;
   margin-bottom: 20px;
 }
 
+/* 게시글 본문 */
+
 .day-entry-content {
+  font-size: 15px;
   line-height: 1.85;
   overflow-wrap: anywhere;
 }
 
-.day-entry-content img {
-  max-width: 100%;
-  height: auto;
+.day-entry-content p {
+  margin-bottom: 16px;
 }
 
+.day-entry-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 20px 0;
+}
+
+.day-entry-content a {
+  overflow-wrap: anywhere;
+}
+
+/* 빈 페이지 */
+
+#day-empty {
+  text-align: center;
+  padding: 30px 0;
+  opacity: 0.6;
+}
+
+/* 모바일 */
+
 @media (max-width: 600px) {
+
   #day-title {
     font-size: 1.4em;
   }
 
-  .day-entry h2 {
+  .day-entry {
+    padding-bottom: 25px;
+    margin-bottom: 30px;
+  }
+
+  .day-entry-title {
     font-size: 1.2em;
   }
+
+  .day-entry-content {
+    font-size: 14px;
+  }
+
 }
+
 </style>
 
 <script>
@@ -92,36 +151,65 @@ document.addEventListener("DOMContentLoaded", function () {
   const collection = params.get("collection");
   const date = params.get("date");
 
-  const entries = document.querySelectorAll(
-    ".day-entry"
+  const archive = document.getElementById("day-archive");
+  const title = document.getElementById("day-title");
+  const empty = document.getElementById("day-empty");
+  const container = document.getElementById("day-posts");
+
+  const entries = Array.from(
+    container.querySelectorAll(".day-entry")
   );
 
-  let count = 0;
+  // 선택한 카테고리와 날짜의 글만 남기기
+
+  const matched = [];
 
   entries.forEach(function(entry) {
 
-    if (
-      entry.dataset.collection === collection &&
-      entry.dataset.date === date
-    ) {
-      entry.hidden = false;
-      count++;
+    const sameCollection =
+      entry.dataset.collection === collection;
+
+    const sameDate =
+      entry.dataset.date === date;
+
+    if (sameCollection && sameDate) {
+      matched.push(entry);
+    } else {
+      entry.remove();
     }
 
   });
 
-  if (count > 0) {
+  // 같은 날짜 내부에서는 시간순으로 정렬
+
+  matched.sort(function(a, b) {
+    return Number(a.dataset.time) -
+           Number(b.dataset.time);
+  });
+
+  matched.forEach(function(entry) {
+    entry.hidden = false;
+    container.appendChild(entry);
+  });
+
+  // 날짜 제목 출력
+
+  if (
+    matched.length > 0 &&
+    /^\d{4}-\d{2}-\d{2}$/.test(date || "")
+  ) {
 
     const parts = date.split("-");
 
-    document.getElementById("day-title").textContent =
+    title.textContent =
       `${Number(parts[0])}년 ${Number(parts[1])}월 ${Number(parts[2])}일`;
 
-    document.getElementById("day-archive").hidden = false;
+    archive.hidden = false;
 
   } else {
 
-    document.getElementById("day-empty").hidden = false;
+    archive.hidden = true;
+    empty.hidden = false;
 
   }
 
