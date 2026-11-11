@@ -7,12 +7,24 @@ author_profile: true
 
 {% assign sorted_posts = site.travel | sort: "date" | reverse %}
 
-<div class="travel-list">
+<div class="travel-toolbar">
+  <div class="travel-sort">
+    <button type="button" id="sort-new" class="active">
+      최신순
+    </button>
+    <button type="button" id="sort-old">
+      오래된순
+    </button>
+  </div>
+</div>
+
+<div class="travel-list" id="travel-list">
 
 {% for post in sorted_posts %}
 
   <a href="{{ post.url | relative_url }}"
-     class="travel-card">
+     class="travel-card"
+     data-date="{{ post.date | date: '%Y-%m-%d' }}">
 
     <div class="travel-card-content">
       <span class="travel-date">
@@ -41,11 +53,44 @@ author_profile: true
 </div>
 
 <style>
+.travel-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 15px 0 25px;
+}
+
+.travel-sort {
+  display: inline-flex;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.travel-sort button {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  padding: 9px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin: 0;
+}
+
+.travel-sort button.active {
+  background: #444;
+  color: #fff;
+}
+
+.travel-sort button:hover:not(.active) {
+  background: rgba(128,128,128,0.1);
+}
+
 .travel-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 25px;
 }
 
 .travel-card {
@@ -85,4 +130,54 @@ author_profile: true
   font-size: 28px;
   opacity: 0.55;
 }
+
+@media (max-width: 600px) {
+  .travel-card {
+    padding: 17px 18px;
+  }
+
+  .travel-date {
+    font-size: 16px;
+  }
+}
 </style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const list = document.getElementById("travel-list");
+  const btnNew = document.getElementById("sort-new");
+  const btnOld = document.getElementById("sort-old");
+
+  if (!list || !btnNew || !btnOld) return;
+
+  function sortTravel(ascending) {
+    const cards = Array.from(
+      list.querySelectorAll(".travel-card")
+    );
+
+    cards.sort(function (a, b) {
+      const dateA = a.dataset.date;
+      const dateB = b.dataset.date;
+
+      return ascending
+        ? dateA.localeCompare(dateB)
+        : dateB.localeCompare(dateA);
+    });
+
+    cards.forEach(function (card) {
+      list.appendChild(card);
+    });
+
+    btnNew.classList.toggle("active", !ascending);
+    btnOld.classList.toggle("active", ascending);
+  }
+
+  btnNew.addEventListener("click", function () {
+    sortTravel(false);
+  });
+
+  btnOld.addEventListener("click", function () {
+    sortTravel(true);
+  });
+});
+</script>
