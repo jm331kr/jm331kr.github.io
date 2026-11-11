@@ -1,0 +1,86 @@
+---
+layout: archive
+title: "Talk"
+permalink: /talk/
+author_profile: true
+---
+
+{% assign notes = site.talks | sort: "date" | reverse %}
+
+<div class="talk-list">
+
+{% for post in notes %}
+
+  <article class="talk-note">
+
+    <div class="talk-date">
+      {{ post.date | date: "%Y.%m.%d · %H:%M" }}
+    </div>
+
+    <div class="talk-content">
+      {{ post.content }}
+    </div>
+
+  </article>
+
+{% endfor %}
+
+{% if notes.size == 0 %}
+  <p class="talk-empty">
+    아직 등록된 메모가 없습니다.
+  </p>
+{% endif %}
+
+</div>
+
+<style>
+.talk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 25px;
+}
+
+.talk-note {
+  padding: 22px 25px;
+  border: 1px solid #8886;
+  border-radius: 10px;
+  background: transparent;
+  overflow-wrap: anywhere;
+}
+
+.talk-date {
+  font-size: 13px;
+  opacity: 0.6;
+  margin-bottom: 14px;
+}
+
+.talk-content {
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.talk-content p {
+  margin: 0 0 12px;
+}
+
+.talk-content p:last-child {
+  margin-bottom: 0;
+}
+
+.talk-empty {
+  text-align: center;
+  padding: 25px 0;
+  opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+  .talk-note {
+    padding: 18px;
+  }
+
+  .talk-content {
+    font-size: 14px;
+  }
+}
+</style>
