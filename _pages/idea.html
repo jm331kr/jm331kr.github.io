@@ -7,36 +7,107 @@ author_profile: true
 
 {% assign ideas = site.idea | sort: "date" | reverse %}
 
-<div class="idea-list">
-  {% for post in ideas %}
-    <a href="{{ post.url | relative_url }}" class="idea-card">
-      <div class="idea-content">
-        <span class="idea-title">
-          {{ post.title }}
-        </span>
+<div class="idea-toolbar">
+  <div class="idea-sort">
+    <button type="button" id="idea-new" class="active">
+      최신순
+    </button>
+    <button type="button" id="idea-old">
+      오래된순
+    </button>
+  </div>
+</div>
 
-        <span class="idea-date">
-          {{ post.date | date: "%Y.%m.%d" }}
-        </span>
-      </div>
+<div class="idea-list" id="idea-list">
 
-      <span class="idea-arrow">›</span>
-    </a>
-  {% endfor %}
+{% for post in ideas %}
 
-  {% if ideas.size == 0 %}
-    <p class="idea-empty">
-      아직 등록된 아이디어가 없습니다.
-    </p>
-  {% endif %}
+  <a href="{{ post.url | relative_url }}"
+     class="idea-card"
+     data-date="{{ post.date | date: '%Y-%m-%d' }}">
+
+    <div class="idea-content">
+      <span class="idea-title">
+        {{ post.title }}
+      </span>
+
+      <span class="idea-date">
+        {{ post.date | date: "%Y.%m.%d" }}
+      </span>
+    </div>
+
+    <span class="idea-arrow">›</span>
+  </a>
+
+{% endfor %}
+
+{% if ideas.size == 0 %}
+  <p class="idea-empty">
+    아직 등록된 아이디어가 없습니다.
+  </p>
+{% endif %}
+
 </div>
 
 <style>
+.idea-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 15px 0 25px;
+}
+
+.idea-sort {
+  display: inline-flex;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.idea-sort button {
+  width: 90px;
+  min-width: 90px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  padding: 9px 0;
+  font-size: 13px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin: 0;
+}
+
+.idea-sort button.active {
+  background: #444;
+  color: #fff;
+}
+
+.idea-sort button:hover:not(.active) {
+  background: rgba(128,128,128,0.1);
+}
+
+/* 다크모드에서만 선택 버튼 색상 변경 */
+html[data-theme="dark"] .idea-sort button.active {
+  background: #e0e0e0;
+  color: #181818;
+  font-weight: 600;
+}
+
+html[data-theme="dark"] .idea-sort button:not(.active) {
+  background: transparent;
+  color: #cccccc;
+}
+
+html[data-theme="dark"] .idea-sort {
+  border-color: #666;
+}
+
 .idea-list {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 25px;
 }
 
 .idea-card {
@@ -95,3 +166,43 @@ author_profile: true
   }
 }
 </style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const list = document.getElementById("idea-list");
+  const btnNew = document.getElementById("idea-new");
+  const btnOld = document.getElementById("idea-old");
+
+  if (!list || !btnNew || !btnOld) return;
+
+  function sortIdeas(ascending) {
+    const cards = Array.from(
+      list.querySelectorAll(".idea-card")
+    );
+
+    cards.sort(function (a, b) {
+      const dateA = a.dataset.date;
+      const dateB = b.dataset.date;
+
+      return ascending
+        ? dateA.localeCompare(dateB)
+        : dateB.localeCompare(dateA);
+    });
+
+    cards.forEach(function (card) {
+      list.appendChild(card);
+    });
+
+    btnNew.classList.toggle("active", !ascending);
+    btnOld.classList.toggle("active", ascending);
+  }
+
+  btnNew.addEventListener("click", function () {
+    sortIdeas(false);
+  });
+
+  btnOld.addEventListener("click", function () {
+    sortIdeas(true);
+  });
+});
+</script>
