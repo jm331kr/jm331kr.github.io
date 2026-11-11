@@ -53,10 +53,10 @@ author_profile: true
 
 #day-archive[hidden],
 #day-empty[hidden],
-.day-entry[hidden] {
+.day-entry[hidden],
+#day-title[hidden] {
   display: none !important;
 }
-
 /* 날짜 제목 */
 
 #day-title {
@@ -139,79 +139,83 @@ author_profile: true
 
 }
 
-</style>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
+  function initDayPage() {
+    const params = new URLSearchParams(window.location.search);
+    const collection = params.get("collection");
+    const date = params.get("date");
 
-  const params = new URLSearchParams(
-    window.location.search
-  );
+    const archive = document.getElementById("day-archive");
+    const title = document.getElementById("day-title");
+    const empty = document.getElementById("day-empty");
+    const container = document.getElementById("day-posts");
 
-  const collection = params.get("collection");
-  const date = params.get("date");
-
-  const archive = document.getElementById("day-archive");
-  const title = document.getElementById("day-title");
-  const empty = document.getElementById("day-empty");
-  const container = document.getElementById("day-posts");
-
-  const entries = Array.from(
-    container.querySelectorAll(".day-entry")
-  );
-
-  // 선택한 카테고리와 날짜의 글만 남기기
-
-  const matched = [];
-
-  entries.forEach(function(entry) {
-
-    const sameCollection =
-      entry.dataset.collection === collection;
-
-    const sameDate =
-      entry.dataset.date === date;
-
-    if (sameCollection && sameDate) {
-      matched.push(entry);
-    } else {
-      entry.remove();
+    if (!archive || !title || !empty || !container) {
+      return;
     }
 
-  });
+    const validDate = /^\d{4}-\d{2}-\d{2}$/.test(date || "");
 
-  // 같은 날짜 내부에서는 시간순으로 정렬
+    if (!collection || !validDate) {
+      empty.hidden = false;
+      empty.textContent = "올바른 날짜 또는 카테고리가 아닙니다.";
+      return;
+    }
 
-  matched.sort(function(a, b) {
-    return Number(a.dataset.time) -
-           Number(b.dataset.time);
-  });
+    const entries = Array.from(
+      container.querySelectorAll(".day-entry")
+    );
 
-  matched.forEach(function(entry) {
-    entry.hidden = false;
-    container.appendChild(entry);
-  });
+    const matched = [];
 
-  // 날짜 제목 출력
+    entries.forEach(function (entry) {
+      if (
+        entry.dataset.collection === collection &&
+        entry.dataset.date === date
+      ) {
+        matched.push(entry);
+      } else {
+        entry.remove();
+      }
+    });
 
-  if (
-    matched.length > 0 &&
-    /^\d{4}-\d{2}-\d{2}$/.test(date || "")
-  ) {
+    matched.sort(function (a, b) {
+      return Number(a.dataset.time || 0) -
+             Number(b.dataset.time || 0);
+    });
 
-    const parts = date.split("-");
+    if (matched.length === 0) {
+      empty.hidden = false;
+      empty.textContent = "해당 날짜에 등록된 게시글이 없습니다.";
+      return;
+    }
+
+    matched.forEach(function (entry) {
+      entry.hidden = false;
+      container.appendChild(entry);
+    });
+
+    const [year, month, day] = date.split("-");
 
     title.textContent =
-      `${Number(parts[0])}년 ${Number(parts[1])}월 ${Number(parts[2])}일`;
+      `${Number(year)}년 ${Number(month)}월 ${Number(day)}일`;
+
+    const pageTitle = document.querySelector(".page__title");
+    if (pageTitle) {
+      pageTitle.textContent = title.textContent;
+      title.hidden = true;
+    }
 
     archive.hidden = false;
-
-  } else {
-
-    archive.hidden = true;
-    empty.hidden = false;
-
+    empty.hidden = true;
   }
 
-});
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initDayPage);
+  } else {
+    initDayPage();
+  }
+})();
 </script>
