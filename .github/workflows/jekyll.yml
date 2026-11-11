@@ -51,6 +51,20 @@ jobs:
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+
+      - name: Check Travel pages
+        run: |
+          echo "=== Travel collection files ==="
+          ls -la _travel/
+          echo "=== Generated Travel pages ==="
+          find _site/travel -maxdepth 3 -type f || true
+          echo "=== Travel index ==="
+          if [ -f _site/travel/index.html ]; then
+            echo "Travel page exists"
+          else
+            echo "Travel page missing"
+          fi
+
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v5.0.0
 
