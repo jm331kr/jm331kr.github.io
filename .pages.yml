@@ -1,0 +1,28 @@
+media:
+  input: images
+  output: /images
+
+content:
+  - name: posts
+    label: Posts
+    type: collection
+    path: _posts
+    filename: "{year}-{month}-{day}-{primary}.md"
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: date
+        label: Date
+        type: date
+        options:
+          time: true
+          format: yyyy-MM-dd HH:mm:ss xx
+      - name: categories
+        label: Categories
+        type: string
+      - name: body
+        label: Content
+        type: rich-text
