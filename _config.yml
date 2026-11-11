@@ -220,6 +220,7 @@ kramdown:
 
 
 # These settings control the types of collections used by the template
+
 collections:
   teaching:
     output: true
@@ -233,10 +234,35 @@ collections:
   talks:
     output: true
     permalink: /:collection/:path/
+
   travel:
     output: true
-    future: true
     permalink: /travel/:name/
+
+  film:
+    output: true
+    permalink: /film/:name/
+
+  books:
+    output: true
+    permalink: /books/:name/
+
+  music:
+    output: true
+    permalink: /music/:name/
+
+  life:
+    output: true
+    permalink: /life/:name/
+
+  study:
+    output: true
+    permalink: /study/:name/
+
+  culture:
+    output: true
+    permalink: /culture/:name/
+
 
 
 
