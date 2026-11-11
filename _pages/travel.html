@@ -5,15 +5,21 @@ permalink: /travel/
 author_profile: true
 ---
 
-<p>컬렉션: {{ site.collections | map: "label" | join: ", " }}</p>
-<p>Travel 글 수: {{ site.travel.size }}</p>
+{% assign sorted_posts = site.travel | sort: "date" | reverse %}
 
-{% for post in site.travel %}
-  <p>
-    <a href="{{ post.url | relative_url }}">
+{% for post in sorted_posts %}
+
+  <div style="padding: 22px 0; border-bottom: 1px solid #ddd;">
+
+    <a href="{{ post.url | relative_url }}"
+       style="font-size: 20px; font-weight: 500; text-decoration: none;">
+
       {{ post.date | date: "%Y년 %m월 %d일" }}
-      | {{ post.title }}
+
     </a>
-  </p>
+
+  </div>
+
 {% endfor %}
+
 
