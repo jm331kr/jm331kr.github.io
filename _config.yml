@@ -233,6 +233,10 @@ collections:
   talks:
     output: true
     permalink: /:collection/:path/
+  travel:
+    output: true
+    permalink: /travel/:name/
+
 
 
 # These settings control how pages and collections are included in the site
