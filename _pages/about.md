@@ -15,3 +15,14 @@ redirect_from:
 이곳은  다양한 순간들을 사진과 글로 기록하는 공간입니다.
 
 편안히 둘러봐 주세요.
+
+## About
+
+Hello!
+
+Thank you for visiting my archive.
+
+This is a space where I document various moments through photographs and writing.
+
+Feel free to look around.
+
