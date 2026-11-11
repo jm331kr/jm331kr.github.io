@@ -1,0 +1,97 @@
+---
+layout: archive
+title: "Idea"
+permalink: /idea/
+author_profile: true
+---
+
+{% assign ideas = site.idea | sort: "date" | reverse %}
+
+<div class="idea-list">
+  {% for post in ideas %}
+    <a href="{{ post.url | relative_url }}" class="idea-card">
+      <div class="idea-content">
+        <span class="idea-title">
+          {{ post.title }}
+        </span>
+
+        <span class="idea-date">
+          {{ post.date | date: "%Y.%m.%d" }}
+        </span>
+      </div>
+
+      <span class="idea-arrow">›</span>
+    </a>
+  {% endfor %}
+
+  {% if ideas.size == 0 %}
+    <p class="idea-empty">
+      아직 등록된 아이디어가 없습니다.
+    </p>
+  {% endif %}
+</div>
+
+<style>
+.idea-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 25px;
+}
+
+.idea-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 25px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.idea-card:hover {
+  background: rgba(128,128,128,0.08);
+  border-color: #888;
+}
+
+.idea-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.idea-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.idea-date {
+  font-size: 13px;
+  opacity: 0.65;
+}
+
+.idea-arrow {
+  font-size: 28px;
+  opacity: 0.55;
+  margin-left: 15px;
+}
+
+.idea-empty {
+  text-align: center;
+  padding: 25px 0;
+  opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+  .idea-card {
+    padding: 17px 18px;
+  }
+
+  .idea-title {
+    font-size: 16px;
+  }
+}
+</style>
