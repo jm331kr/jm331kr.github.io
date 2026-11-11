@@ -365,3 +365,28 @@ b, i, strong, em, blockquote, p, q, span, figure, img, h1, h2, header, input, a,
       display: none;
     }
   }
+
+
+/* 모바일에서 Footer를 화면 하단에 배치 */
+@media (max-width: 767px) {
+  html {
+    min-height: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .initial-content {
+    flex: 1 0 auto;
+  }
+
+  .page__footer {
+    position: relative !important;
+    margin-top: auto !important;
+    flex-shrink: 0;
+  }
+}
