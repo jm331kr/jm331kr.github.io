@@ -367,26 +367,26 @@ b, i, strong, em, blockquote, p, q, span, figure, img, h1, h2, header, input, a,
   }
 
 
-/* 모바일에서 Footer를 화면 하단에 배치 */
-@media (max-width: 767px) {
-  html {
-    min-height: 100%;
-  }
 
+/* 모바일 Footer 하단 배치 - 기존 가로 레이아웃 유지 */
+@media (max-width: 767px) {
   body {
     min-height: 100vh;
     min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
   }
 
   .initial-content {
-    flex: 1 0 auto;
+    min-width: 0;
+    width: 100%;
   }
 
   .page__footer {
     position: relative !important;
-    margin-top: auto !important;
-    flex-shrink: 0;
+    margin-top: 0 !important;
+    width: 100%;
   }
 }
+
