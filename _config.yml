@@ -235,6 +235,7 @@ collections:
     permalink: /:collection/:path/
   travel:
     output: true
+    future: true
     permalink: /travel/:name/
 
 
