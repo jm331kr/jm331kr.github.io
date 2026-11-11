@@ -9,20 +9,35 @@ content:
     path: _posts
     filename: "{year}-{month}-{day}-{primary}.md"
     format: yaml-frontmatter
+
     fields:
       - name: title
         label: Title
         type: string
         required: true
+
       - name: date
         label: Date
         type: date
         options:
           time: true
           format: yyyy-MM-dd HH:mm:ss xx
+
       - name: categories
         label: Categories
-        type: string
+        type: select
+        options:
+          values:
+            - name: travel
+              label: Travel
+            - name: photography
+              label: Photography
+            - name: daily
+              label: Daily
+            - name: thoughts
+              label: Thoughts
+          multiple: false
+
       - name: body
         label: Content
         type: rich-text
