@@ -9,24 +9,24 @@
 
 
 main:
-  - title: "Home"
+  - title: "  Home  "
     url: /
 
-  - title: "Travel"
+  - title: "  Travel  "
     url: /travel/
 
-  - title: "Film"
+  - title: "  Film  "
     url: /film/
 
-  - title: "Books"
+  - title: "  Books  "
     url: /books/
 
-  - title: "Music"
+  - title: "  Music  "
     url: /music/
 
-  - title: "Life"
+  - title: "  Life  "
     url: /life/
 
-  - title: "Talk"
+  - title: "  Talk  "
     url: /talk/
 
