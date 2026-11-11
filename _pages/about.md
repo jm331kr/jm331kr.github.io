@@ -1,14 +1,11 @@
 ---
 permalink: /
-title: 
+title: "Welcome to Jaemin's Archive Home"
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
-
-
-## Welcome to Jaemin's Archive
 
 안녕하세요.
 
