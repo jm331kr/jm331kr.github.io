@@ -148,23 +148,22 @@
 }
 
 
-/* 다크모드 정렬 버튼 */
-@media (prefers-color-scheme: dark) {
-  .travel-sort button.active {
-    background: #e0e0e0;
-    color: #181818;
-    font-weight: 600;
-  }
-
-  .travel-sort button:not(.active) {
-    background: transparent;
-    color: #cccccc;
-  }
-
-  .travel-sort {
-    border-color: #666;
-  }
+/* 다크모드에서만 선택 버튼 색상 변경 */
+html[data-theme="dark"] .travel-sort button.active {
+  background: #e0e0e0;
+  color: #181818;
+  font-weight: 600;
 }
+
+html[data-theme="dark"] .travel-sort button:not(.active) {
+  background: transparent;
+  color: #cccccc;
+}
+
+html[data-theme="dark"] .travel-sort {
+  border-color: #666;
+}
+
 
 </style>
 
