@@ -53,16 +53,15 @@ jobs:
           JEKYLL_ENV: production
 
       
-      - name: Check Jekyll configuration
+      
+      - name: Check file encoding
         run: |
-          echo "=== Loaded configuration ==="
-          bundle exec jekyll doctor
-          echo "=== Jekyll collections ==="
-          bundle exec jekyll build --verbose 2>&1 | grep -E "Configuration file|Source:|Destination:|_travel|travel.html" || true
-          echo "=== Generated files ==="
-          find _site -iname "*travel*" -o -iname "*tokyo*"
-          echo "=== Travel source ==="
-          ls -la _pages/travel.html _travel/
+          echo "=== travel.html ==="
+          od -An -tx1 -N16 _pages/travel.html
+
+          echo "=== tokyo.md ==="
+          od -An -tx1 -N16 _travel/2026-11-10-tokyo.md
+
 
 
       - name: Upload GitHub Pages artifact
