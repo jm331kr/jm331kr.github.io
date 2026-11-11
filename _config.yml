@@ -263,6 +263,11 @@ collections:
     output: true
     permalink: /culture/:name/
 
+  idea:
+    output: true
+    permalink: /idea/:name/
+
+
 
 
 
