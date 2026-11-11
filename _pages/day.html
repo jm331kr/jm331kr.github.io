@@ -1,0 +1,129 @@
+---
+layout: archive
+title: "Archive"
+permalink: /day/
+author_profile: true
+---
+
+<div id="day-archive" hidden>
+
+  <h1 id="day-title"></h1>
+
+  <div id="day-posts">
+
+    {% for collection in site.collections %}
+      {% assign posts = collection.docs | sort: "date" %}
+
+      {% for post in posts %}
+
+        <article class="day-entry"
+                 data-collection="{{ collection.label }}"
+                 data-date="{{ post.date | date: '%Y-%m-%d' }}"
+                 hidden>
+
+          <h2>{{ post.title }}</h2>
+
+          <div class="day-entry-content">
+            {{ post.content | markdownify }}
+          </div>
+
+        </article>
+
+      {% endfor %}
+    {% endfor %}
+
+  </div>
+
+</div>
+
+<p id="day-empty" hidden>
+  해당 날짜에 등록된 게시글이 없습니다.
+</p>
+
+<style>
+#day-title {
+  font-size: 1.7em;
+  margin-bottom: 30px;
+}
+
+.day-entry {
+  padding: 0 0 30px;
+  margin-bottom: 35px;
+  border-bottom: 1px solid #8885;
+}
+
+.day-entry:last-child {
+  border-bottom: none;
+}
+
+.day-entry h2 {
+  font-size: 1.35em;
+  margin-bottom: 20px;
+}
+
+.day-entry-content {
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+}
+
+.day-entry-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 600px) {
+  #day-title {
+    font-size: 1.4em;
+  }
+
+  .day-entry h2 {
+    font-size: 1.2em;
+  }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const collection = params.get("collection");
+  const date = params.get("date");
+
+  const entries = document.querySelectorAll(
+    ".day-entry"
+  );
+
+  let count = 0;
+
+  entries.forEach(function(entry) {
+
+    if (
+      entry.dataset.collection === collection &&
+      entry.dataset.date === date
+    ) {
+      entry.hidden = false;
+      count++;
+    }
+
+  });
+
+  if (count > 0) {
+
+    const parts = date.split("-");
+
+    document.getElementById("day-title").textContent =
+      `${Number(parts[0])}년 ${Number(parts[1])}월 ${Number(parts[2])}일`;
+
+    document.getElementById("day-archive").hidden = false;
+
+  } else {
+
+    document.getElementById("day-empty").hidden = false;
+
+  }
+
+});
+</script>
