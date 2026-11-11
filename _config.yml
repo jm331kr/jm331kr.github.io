@@ -327,6 +327,57 @@ defaults:
       layout: talk
       author_profile: true
       share: true
+  
+  # Travel
+  - scope:
+      path: ""
+      type: travel
+    values: &archive_post_defaults
+      layout: single
+      author_profile: true
+
+  # Film
+  - scope:
+      path: ""
+      type: film
+    values: *archive_post_defaults
+
+  # Books
+  - scope:
+      path: ""
+      type: books
+    values: *archive_post_defaults
+
+  # Music
+  - scope:
+      path: ""
+      type: music
+    values: *archive_post_defaults
+
+  # Life
+  - scope:
+      path: ""
+      type: life
+    values: *archive_post_defaults
+
+  # Study
+  - scope:
+      path: ""
+      type: study
+    values: *archive_post_defaults
+
+  # Culture
+  - scope:
+      path: ""
+      type: culture
+    values: *archive_post_defaults
+
+  # Ideas
+  - scope:
+      path: ""
+      type: idea
+    values: *archive_post_defaults
+
 
 
 # Sass/SCSS
