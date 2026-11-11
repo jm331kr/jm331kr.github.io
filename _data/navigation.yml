@@ -9,8 +9,6 @@
 
 
 main:
-  - title: "Home"
-    url: /
 
   - title: "Travel"
     url: /travel/
@@ -26,15 +24,6 @@ main:
 
   - title: "Life"
     url: /life/
-
-   - title: "Study"
-    url: /study/
-
-   - title: "Culture"
-    url: /culture/
-
-   - title: "Food"
-    url: /food/
     
   - title: "Talk"
     url: /talk/
