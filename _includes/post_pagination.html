@@ -1,16 +1,97 @@
 {% include base_path %}
 
-{% if page.previous or page.next %}
-  <nav class="pagination">
-    {% if page.previous %}
-      <a href="{{ base_path }}{{ page.previous.url }}" class="pagination--pager" title="{{ page.previous.title | markdownify | strip_html }}">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
-    {% else %}
-      <a href="#" class="pagination--pager disabled">{{ site.data.ui-text[site.locale].pagination_previous | default: "Previous" }}</a>
+{% assign nav_collections = "travel,film,books,music,life,study,culture,idea" | split: "," %}
+
+{% if nav_collections contains page.collection %}
+
+  {% assign current_collection = site.collections | where: "label", page.collection | first %}
+  {% assign sorted_posts = current_collection.docs | sort: "date" | reverse %}
+  {% assign date_groups = sorted_posts | group_by_exp: "post", "post.date | date: '%Y-%m-%d'" %}
+
+  {% assign current_date = page.date | date: "%Y-%m-%d" %}
+  {% assign current_index = -1 %}
+
+  {% for group in date_groups %}
+    {% if group.name == current_date %}
+      {% assign current_index = forloop.index0 %}
+      {% break %}
     {% endif %}
-    {% if page.next %}
-      <a href="{{ base_path }}{{ page.next.url }}" class="pagination--pager" title="{{ page.next.title | markdownify | strip_html }}">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
-    {% else %}
-      <a href="#" class="pagination--pager disabled">{{ site.data.ui-text[site.locale].pagination_next | default: "Next" }}</a>
-    {% endif %}
-  </nav>
+  {% endfor %}
+
+  {% assign older_date = "" %}
+  {% assign newer_date = "" %}
+
+  {% if current_index >= 0 %}
+    {% assign older_index = current_index | plus: 1 %}
+    {% assign newer_index = current_index | minus: 1 %}
+
+    {% for group in date_groups %}
+      {% if forloop.index0 == older_index %}
+        {% assign older_date = group.name %}
+      {% endif %}
+
+      {% if forloop.index0 == newer_index %}
+        {% assign newer_date = group.name %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if older_date != "" or newer_date != "" %}
+    <nav class="pagination" aria-label="게시글 이동">
+
+      {% if older_date != "" %}
+        <a href="{{ '/day/' | relative_url }}?collection={{ page.collection }}&amp;date={{ older_date }}"
+           class="pagination--pager">
+          Previous
+        </a>
+      {% else %}
+        <span class="pagination--pager disabled">
+          Previous
+        </span>
+      {% endif %}
+
+      {% if newer_date != "" %}
+        <a href="{{ '/day/' | relative_url }}?collection={{ page.collection }}&amp;date={{ newer_date }}"
+           class="pagination--pager">
+          Next
+        </a>
+      {% else %}
+        <span class="pagination--pager disabled">
+          Next
+        </span>
+      {% endif %}
+
+    </nav>
+  {% endif %}
+
+{% else %}
+
+  {% if page.previous or page.next %}
+    <nav class="pagination">
+
+      {% if page.previous %}
+        <a href="{{ base_path }}{{ page.previous.url }}"
+           class="pagination--pager">
+          Previous
+        </a>
+      {% else %}
+        <span class="pagination--pager disabled">
+          Previous
+        </span>
+      {% endif %}
+
+      {% if page.next %}
+        <a href="{{ base_path }}{{ page.next.url }}"
+           class="pagination--pager">
+          Next
+        </a>
+      {% else %}
+        <span class="pagination--pager disabled">
+          Next
+        </span>
+      {% endif %}
+
+    </nav>
+  {% endif %}
+
 {% endif %}
