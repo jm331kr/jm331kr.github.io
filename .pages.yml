@@ -82,10 +82,27 @@ content:
     format: yaml-frontmatter
     fields: *post_fields
 
+  
   - name: talks
     label: Talk
     type: collection
     path: _talks
     filename: "{year}-{month}-{day}-{primary}.md"
     format: yaml-frontmatter
-    fields: *post_fields
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+
+      - name: date
+        label: Date
+        type: date
+        options:
+          time: true
+          format: "yyyy-MM-dd HH:mm:ss xxx"
+
+      - name: body
+        label: Content
+        type: rich-text
+
