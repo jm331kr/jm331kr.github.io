@@ -185,6 +185,20 @@ author_profile: true
   box-sizing: border-box;
 }
 
+/* Previous / Next - Travel 날짜 카드와 동일한 호버 효과 */
+
+#day-archive nav.pagination a.pagination--pager {
+  transition: background 0.2s, border-color 0.2s;
+}
+
+#day-archive nav.pagination a.pagination--pager:hover,
+#day-archive nav.pagination a.pagination--pager:focus-visible {
+  background: rgba(128,128,128,0.08) !important;
+  border-color: #888 !important;
+  position: relative;
+  z-index: 1;
+}
+
 </style>
 
 <script>
