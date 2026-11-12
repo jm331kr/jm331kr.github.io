@@ -22,7 +22,7 @@ author_profile: true
 
 {% for post in ideas %}
 
-  <a href="{{ post.url | relative_url }}"
+  <a href="{{ '/day/' | relative_url }}?collection=idea&amp;date={{ post.date | date: '%Y-%m-%d' }}"
      class="idea-card"
      data-date="{{ post.date | date: '%Y-%m-%d' }}">
 
