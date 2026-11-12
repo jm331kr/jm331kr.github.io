@@ -260,3 +260,75 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+
+<!-- 날짜별 Previous / Next -->
+{% assign nav_collections = "travel,film,books,music,life,study,culture,idea" | split: "," %}
+
+<script>
+(function () {
+  const datesByCollection = {
+    {% for label in nav_collections %}
+      {% assign col = site.collections | where: "label", label | first %}
+      {% assign posts = col.docs | sort: "date" %}
+      "{{ label }}": [
+        {% for post in posts %}
+          "{{ post.date | date: '%Y-%m-%d' }}"{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  };
+
+  function initPagination() {
+    const params = new URLSearchParams(window.location.search);
+    const collection = params.get("collection");
+    const date = params.get("date");
+    const archive = document.getElementById("day-archive");
+
+    if (!archive || !datesByCollection[collection]) return;
+
+    const dates = [...new Set(datesByCollection[collection])].sort();
+    const index = dates.indexOf(date);
+
+    if (index === -1 || dates.length < 2) return;
+
+    const nav = document.createElement("nav");
+    nav.className = "pagination";
+    nav.setAttribute("aria-label", "날짜별 기록 이동");
+
+    function addButton(label, targetDate) {
+      const button = document.createElement(
+        targetDate ? "a" : "span"
+      );
+
+      button.className = targetDate
+        ? "pagination--pager"
+        : "pagination--pager disabled";
+
+      button.textContent = label;
+
+      if (targetDate) {
+        button.href =
+          "/day/?collection=" +
+          encodeURIComponent(collection) +
+          "&date=" +
+          encodeURIComponent(targetDate);
+      }
+
+      nav.appendChild(button);
+    }
+
+    addButton("Previous", dates[index - 1]);
+    addButton("Next", dates[index + 1]);
+
+    archive.appendChild(nav);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPagination);
+  } else {
+    initPagination();
+  }
+})();
+</script>
+
+
