@@ -104,7 +104,7 @@ content:
         type: date
         options:
           time: true
-          format: "yyyy-MM-dd HH:mm:ss xxx"
+          format: "yyyy-MM-dd HH:mm:ss '+09:00'"
 
       - name: body
         label: Content
