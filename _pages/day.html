@@ -149,6 +149,42 @@ author_profile: true
   box-sizing: border-box;
 }
 
+/* ======================================
+   Previous / Next 버튼 너비 통일
+   Talk 제외, 날짜별 모든 카테고리 공통
+   ====================================== */
+
+#day-archive {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+#day-archive > nav.pagination {
+  display: flex !important;
+  float: none !important;
+  clear: both;
+
+  width: 100% !important;
+  max-width: none !important;
+
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+
+  box-sizing: border-box;
+}
+
+#day-archive > nav.pagination > .pagination--pager {
+  display: block;
+  float: none !important;
+
+  flex: 1 1 0;
+  width: 50% !important;
+  min-width: 0;
+
+  box-sizing: border-box;
+}
+
 </style>
 
 <script>
