@@ -52,18 +52,6 @@ jobs:
         env:
           JEKYLL_ENV: production
 
-      
-      
-      - name: Check file encoding
-        run: |
-          echo "=== travel.html ==="
-          od -An -tx1 -N16 _pages/travel.html
-
-          echo "=== tokyo.md ==="
-          od -An -tx1 -N16 _travel/2026-11-10-tokyo.md
-
-
-
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v5.0.0
 
