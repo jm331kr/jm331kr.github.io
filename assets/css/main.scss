@@ -36,3 +36,30 @@
     "layout/archive",
     "layout/sidebar"
 ;
+
+
+/* ==========================================
+   게시글 본문 글자 크기 통일
+   ========================================== */
+
+/* 모든 카테고리의 일반 본문 */
+.page__content,
+.archive .day-entry-content,
+.archive .talk-content {
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* 문단과 목록의 글자 크기 통일 */
+.page__content p,
+.page__content li,
+.page__content dl,
+.archive .day-entry-content p,
+.archive .day-entry-content li,
+.archive .day-entry-content dl,
+.archive .talk-content p,
+.archive .talk-content li,
+.archive .talk-content dl {
+  font-size: 1em;
+  line-height: inherit;
+}
