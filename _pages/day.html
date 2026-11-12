@@ -220,3 +220,43 @@ author_profile: true
   }
 })();
 </script>
+
+
+<!-- 날짜별 상세 페이지의 상단 메뉴 활성화 -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const params = new URLSearchParams(window.location.search);
+  const collection = params.get("collection");
+
+  const categoryPaths = {
+    travel: "/travel/",
+    film: "/film/",
+    books: "/books/",
+    music: "/music/",
+    life: "/life/",
+    study: "/study/",
+    culture: "/culture/",
+    idea: "/idea/"
+  };
+
+  const activePath = categoryPaths[collection];
+
+  if (!activePath) return;
+
+  const links = document.querySelectorAll(
+    "#site-nav .masthead__menu-item a"
+  );
+
+  links.forEach(function (link) {
+    const path = new URL(link.href, window.location.href).pathname;
+
+    if (path === activePath) {
+      link.parentElement.classList.add("selected");
+      link.setAttribute("aria-current", "page");
+    }
+  });
+
+});
+</script>
+
