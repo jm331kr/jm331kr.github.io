@@ -20,7 +20,8 @@ content:
         type: date
         options:
           time: true
-          format: "yyyy-MM-dd HH:mm:ss xxx"
+          format: "yyyy-MM-dd HH:mm:ss"
+
       - name: body
         label: Content
         type: rich-text
@@ -81,8 +82,6 @@ content:
     format: yaml-frontmatter
     fields: *post_fields
 
-  
-  
   - name: talks
     label: Talk
     type: collection
@@ -104,10 +103,8 @@ content:
         type: date
         options:
           time: true
-          format: "yyyy-MM-dd HH:mm:ss '+09:00'"
+          format: "yyyy-MM-dd HH:mm:ss"
 
       - name: body
         label: Content
         type: rich-text
-
-
