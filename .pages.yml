@@ -20,7 +20,7 @@ content:
         type: date
         options:
           time: true
-          format: "yyyy-MM-dd HH:mm:ss"
+          format: "yyyy-MM-dd HH:mm:ss '+09:00'"
 
       - name: body
         label: Content
@@ -103,7 +103,7 @@ content:
         type: date
         options:
           time: true
-          format: "yyyy-MM-dd HH:mm:ss"
+          format: "yyyy-MM-dd HH:mm:ss '+09:00'"
 
       - name: body
         label: Content
